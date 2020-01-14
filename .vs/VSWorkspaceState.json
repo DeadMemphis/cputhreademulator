@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Console",
+    "\\Core"
   ],
-  "SelectedNode": "\\Threading Test.sln",
+  "SelectedNode": "\\Console\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
