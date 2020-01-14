@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threading Test", "Threading Test\Threading Test.csproj", "{1FD8EF97-21D6-4400-A5F5-977C783A0C43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Threading Test\Console.csproj", "{1FD8EF97-21D6-4400-A5F5-977C783A0C43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{D54A05C4-BEF7-4EB3-A21D-70C202E31FEF}"
 EndProject
