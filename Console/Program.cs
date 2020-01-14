@@ -81,39 +81,7 @@ namespace Threading_Test
                 mp.FeatTask();
             }
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
-        }
-
-        static void OnStatusChanged(object sender, CONTROLLER_STATES state)
-        {
-            ThreadMP mp;
-            if (sender is ThreadMP)
-            {
-                mp = sender as ThreadMP;
-                Console.WriteLine(mp.Name + " on changed state: " + state.ToString());
-                if (state == CONTROLLER_STATES.READY) mp.SetTask(mp.TaskList.Dequeue());
-                if (mp.TaskList.Count == 0) mp.state = CONTROLLER_STATES.END;
-            }
-            else Console.WriteLine("wrong params");            
-        }
-
-        static void OnRequest(object sender, int TASK)
-        {
-            if (sender is ThreadMP)
-            {
-                Console.WriteLine("Get Request from " + (sender as ThreadMP).Name);
-            }
-            else Console.WriteLine("wrong params");
-        }
-
-        static void OnExecuted(object sender, TASK task)
-        {
-            if (sender is ThreadMP)
-            {
-                Console.WriteLine("Executed task: " + task.ToString() + " on " + (sender as ThreadMP).Name);
-            }
-            else Console.WriteLine("wrong params");
-        }
-
+        }       
     }
 
 

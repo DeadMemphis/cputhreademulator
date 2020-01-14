@@ -4,44 +4,34 @@ using System.Threading;
 
 namespace Core // todo
 {
-    public delegate void StatusChange(object sender, CONTROLLER_STATES state);
-    public delegate void Request(object sender, int TASK);
-    public delegate void Execute(object sender, TASK Task);
-    public class MPController
-    {
-        public string Name;
-        public CONTROLLER_STATES state;
+   
+    public class MPController : Core.BaseController
+    {     
         private CacheController own_cache = new CacheController();
-        private Thread CCThread;
-        public event StatusChange ChangeEvent;
-        public event Request RequestEvent;
-        public event Execute ExecuteEvent;
+        private Thread CCThread;      
+       
+        public MPController() : base(Core.CONTROLLER_TYPE.MPController)
+        {
 
-        public Queue<TASK> TaskList = new Queue<TASK>();
-        public TASK currient;
+        }
+        
         public void Init(string threadName)
         {
             SetCC(threadName);
         }
 
-        public void SetTask(TASK task)
-        {
-            currient = task;
-            state = CONTROLLER_STATES.BUSY;
-        }
-
-        public void FeatTask()
+        public override void FeatTask()
         {
             TaskList.Enqueue(new TASK(2));
             TaskList.Enqueue(new TASK(1));
         }
 
-        public void Remove()
+        public override void Remove()
         {
             //TaskList.Remove(currient);
         }
 
-        public void Execute()
+        public override void Execute()
         {
             for (int i = 0; i < currient.DURATION; i++)
             {
@@ -54,7 +44,7 @@ namespace Core // todo
             //OnSetRequest();
         }
 
-        public void DoTask()
+        public override void OnState()
         {
             state = CONTROLLER_STATES.STARTING;
             for(;state != CONTROLLER_STATES.END;)
@@ -80,35 +70,7 @@ namespace Core // todo
                 }
                 OnStatusChange();
             }
-        }
-
-        public void Wait()
-        {
-            try
-            {
-                Thread.Sleep(Timeout.Infinite);
-            }
-            catch(ThreadInterruptedException)
-            {
-                Console.WriteLine(Name + " woke the fuck up");
-            }
-        }
-
-        public void OnStatusChange()
-        {
-            ChangeEvent?.Invoke(this, state);
-        }
-
-        public void OnSetRequest()
-        {
-            RequestEvent?.Invoke(this, currient.DURATION);
-        }
-
-        public void OnExecuted()
-        {
-            ExecuteEvent?.Invoke(this, currient);
-            state = CONTROLLER_STATES.READY;
-        }
+        }               
 
         private void SetCC(string name)
         {
