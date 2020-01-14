@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Core",
     "\\Threading Test"
   ],
-  "SelectedNode": "\\Threading Test.sln",
+  "SelectedNode": "\\Threading Test",
   "PreviewInSolutionExplorer": false
 }
