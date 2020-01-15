@@ -9,7 +9,7 @@ namespace Core.Core
     public delegate void StatusChange(object sender, CONTROLLER_STATES state);
     public delegate void Request(object sender, int TASK);
     public delegate void Execute(object sender, TASK Task);
-    abstract class BaseController
+    public abstract class BaseController
     {
         public string Name;
         public CONTROLLER_STATES state;
