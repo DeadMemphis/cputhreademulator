@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public enum CONTROLLER_TYPE : byte
+    enum COMMAND_TYPE : byte
     {
-        MPController = 0,
-        CacheController = 2
+        CACHE = 2,
+        CACHE_OBJCTRL = 4,
+        NON_CACHE = 8,
+        NON_CACHE_OBJCTRL = 16
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Core
+namespace Core
 {
     public enum CONTROLLER_MODE : byte
     {

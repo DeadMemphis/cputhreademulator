@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Core.APILevel
 {
-    public delegate void ExecuteTask(object sender, TASK Task);
+    public delegate void ExecuteTask(object sender, COMMAND Task);
     public class Controller
     {
         static List<Thread> ThreadPool = new List<Thread>();
@@ -16,7 +16,7 @@ namespace Core.APILevel
         {
             for (int i = 0; i < count; i++)
             {
-                MPController mp = new MPController();
+                MPController mp = new MPController(CONTROLLER_MODE.FIFO);
                 Thread thr = new Thread(mp.OnState)
                 {
                     IsBackground = true,
@@ -55,7 +55,7 @@ namespace Core.APILevel
             else Console.WriteLine("wrong params");
         }
 
-        static void OnExecuted(object sender, TASK task)
+        static void OnExecuted(object sender, COMMAND task)
         {
             if (sender is MPController)
             {
@@ -63,7 +63,7 @@ namespace Core.APILevel
             }
             else Console.WriteLine("wrong params");
         }
-        public void OnExecutedTaks(TASK task)
+        public void OnExecutedTaks(COMMAND task)
         {
             ExecuteTaksEvent?.Invoke(this, task);
         }
