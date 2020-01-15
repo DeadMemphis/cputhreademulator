@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Console",
-    "\\Core"
+    "\\Core",
+    "\\Core\\APILevel",
+    "\\Core\\Core"
   ],
-  "SelectedNode": "\\Console\\Program.cs",
+  "SelectedNode": "\\Threading Test.sln",
   "PreviewInSolutionExplorer": false
 }
