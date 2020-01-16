@@ -8,27 +8,28 @@ namespace Core
 {
     public class SystemBus
     {
-        private bool busy = false;
-        private readonly object lockObj = new object();
-
-        public bool IsBusy()
+        static object locker = new object();
+        private static bool busy = false;
+        public static bool IsBusy()
         {
-            if (busy) return true;
-            else return false;
-        }
-
-        public void TakeSystemBus()
-        {
-            lock (lockObj)
+            lock (locker)
             {
-                busy = true;
+                if (busy) return true;
+                else return false;
             }
         }
-        public void FreeSystemBus()
+        public static void FreeBus()
         {
-            lock (lockObj)
+            lock (locker)
             {
                 busy = false;
+            }
+        }
+        public static void TakeBus()
+        {
+            lock (locker)
+            {
+                busy = true;
             }
         }
     }

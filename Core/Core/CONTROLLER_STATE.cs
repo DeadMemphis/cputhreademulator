@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public enum CONTROLLER_STATES : byte
+    public enum CONTROLLER_STATE : byte
     {
         STARTING = 0,
         WAITING = 2,
@@ -19,23 +19,23 @@ namespace Core
 
     public static class CoreExtensions
     {
-        public static string ToString(this CONTROLLER_STATES state)
+        public static string ToString(this CONTROLLER_STATE state)
         {
             switch (state)
             {
-                case CONTROLLER_STATES.BUSY:
+                case CONTROLLER_STATE.BUSY:
                     return "BUSY";
-                case CONTROLLER_STATES.END:
+                case CONTROLLER_STATE.END:
                     return "END";
-                case CONTROLLER_STATES.EXECUTED:
+                case CONTROLLER_STATE.EXECUTED:
                     return "EXECUTED";
-                case CONTROLLER_STATES.INTERRUPT:
+                case CONTROLLER_STATE.INTERRUPT:
                     return "INTERRUPT";
-                case CONTROLLER_STATES.STARTING:
+                case CONTROLLER_STATE.STARTING:
                     return "STARTING";
-                case CONTROLLER_STATES.WAITING:
+                case CONTROLLER_STATE.WAITING:
                     return "WAITING";
-                case CONTROLLER_STATES.READY:
+                case CONTROLLER_STATE.READY:
                     return "READY";
                 default:
                     return "NOT SUPPORTED";

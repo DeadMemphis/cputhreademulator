@@ -39,7 +39,7 @@ namespace Threading_Test
             bool end = false;
             for (int thr = 0; thr < ThreadPool.Count; thr++)
             {
-                if (MPPool[thr].state == CONTROLLER_STATES.END)
+                if (MPPool[thr].state == CONTROLLER_STATE.END)
                 {
                     ThreadPool[thr].Abort();
                     Console.WriteLine("Thread " + thr + " aborted from mainThread");

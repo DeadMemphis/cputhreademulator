@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D54A05C4-BEF7-4EB3-A21D-70C202E31FEF}</ProjectGuid>
+    <ProjectGuid>{C3B819D8-F79B-4BAD-81E2-BED3F7961BD8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Core</RootNamespace>
-    <AssemblyName>Core</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>Drawer</RootNamespace>
+    <AssemblyName>Drawer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,22 +42,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APILevel\Controller.cs" />
-    <Compile Include="Core\BaseController.cs" />
-    <Compile Include="Core\CONTROLLER_MODE.cs" />
-    <Compile Include="Core\CONTROLLER_STATE.cs" />
-    <Compile Include="Core\CONTROLLER_TYPE.cs" />
-    <Compile Include="Core\SystemBus.cs" />
-    <Compile Include="COMMAND.cs" />
-    <Compile Include="Core\CacheController.cs" />
-    <Compile Include="Core\MPController.cs" />
+    <Compile Include="COMMAND_TYPE.cs" />
+    <Compile Include="Drawer.cs" />
+    <Compile Include="FormDrawer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDrawer.Designer.cs">
+      <DependentUpon>FormDrawer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Squre.cs" />
+    <Compile Include="SQURE_TYPE.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Drawer\Drawer.csproj">
-      <Project>{c3b819d8-f79b-4bad-81e2-bed3f7961bd8}</Project>
-      <Name>Drawer</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="FormDrawer.resx">
+      <DependentUpon>FormDrawer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

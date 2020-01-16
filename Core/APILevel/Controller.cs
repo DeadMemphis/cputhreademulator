@@ -7,11 +7,14 @@ using System.Threading;
 namespace Core.APILevel
 {
     public delegate void ExecuteTask(object sender, COMMAND Task);
+    
     public class Controller
     {
         static List<Thread> ThreadPool = new List<Thread>();
         static List<MPController> MPPool = new List<MPController>();
+        
         public event ExecuteTask ExecuteTaksEvent;
+        
         public void Init(short count)
         {
             for (int i = 0; i < count; i++)
@@ -33,15 +36,15 @@ namespace Core.APILevel
             }
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
         }
-        static void OnStatusChanged(object sender, CONTROLLER_STATES state)
+        static void OnStatusChanged(object sender, CONTROLLER_STATE state)
         {
             MPController mp;
             if (sender is MPController)
             {
                 mp = sender as MPController;
                 Console.WriteLine(mp.Name + " on changed state: " + state.ToString());
-                if (state == CONTROLLER_STATES.READY) mp.SetTask(mp.TaskList.Dequeue());
-                if (mp.TaskList.Count == 0) mp.state = CONTROLLER_STATES.END;
+                if (state == CONTROLLER_STATE.READY) mp.SetTask(mp.TaskList.Dequeue());
+                if (mp.TaskList.Count == 0) mp.state = CONTROLLER_STATE.END;
             }
             else Console.WriteLine("wrong params");
         }

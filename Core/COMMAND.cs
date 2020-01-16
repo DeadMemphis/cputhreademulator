@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Drawer;
 
 namespace Core
 {
     public struct COMMAND
     {
-        public int DURATION;
+        public int DURATIONCOMMAND;
+        public COMMAND_TYPE TYPE;
         public bool COMPLITE;
-        public bool DEFFERED;
         public bool DECODED;
-        public COMMAND(int duration = 1, bool complite = false, bool deffered = false, bool decoded = false) // default 1 tact 
+        public bool DEFERRED;
+        public COMMAND(int duration, COMMAND_TYPE type, bool complite = false, bool decoded = false, bool deferred = false)
         {
-            DURATION = duration;
+            DURATIONCOMMAND = duration;
+            TYPE = type;
             COMPLITE = complite;
-            DEFFERED = deffered;
             DECODED = decoded;
+            DEFERRED = deferred;
+        }
+        public bool IsPriority // only for FIFO
+        {
+            get
+            {
+                if (this.TYPE == COMMAND_TYPE.CACHE || this.TYPE == COMMAND_TYPE.CACHE_CTRL) return true;
+                else return false;
+            }
         }
     }
 }
