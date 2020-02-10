@@ -13,6 +13,9 @@ namespace Threading_Test
             Console.WriteLine("Core v2.0 .");
             Core.APILevel.Controller wocher = new Core.APILevel.Controller();
             wocher.Init(2);
+
+            while (true) { }
+            
             //for (int task = 0; task < 2; task++)
             //{                
             //    for (int mp = 0; mp < MPPool.Count; mp++)
