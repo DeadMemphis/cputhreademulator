@@ -20,7 +20,7 @@ namespace Drawer
                     Color.FromArgb(0, 0, 0, 0));
             graph.FillPolygon(hBrush, points);
         }
-        public Bitmap DrawBrickUp(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE ctype, bool hatch = false)
+        public Bitmap DrawBrickUp(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             graph = Graphics.FromImage(bitmap);
             squreUp.ReSetPoints(pos, line, SQURE_TYPE.UP);
@@ -28,7 +28,7 @@ namespace Drawer
             graph.DrawCurve(new Pen(Color.FromKnownColor((KnownColor)ctype), 3), squreUp.GetPoints(), 0.01f);
             return bitmap;
         }
-        public Bitmap DrawBrickDown(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE ctype, bool hatch = false)
+        public Bitmap DrawBrickDown(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             graph = Graphics.FromImage(bitmap);
             squreDown.ReSetPoints(pos, line, SQURE_TYPE.DOWN);
@@ -60,8 +60,8 @@ namespace Drawer
     }
     interface IDraw
     {
-        Bitmap DrawBrickUp(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE ctype, bool hatch);
-        Bitmap DrawBrickDown(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE ctype, bool hatch);        
+        Bitmap DrawBrickUp(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE_COLOR ctype, bool hatch);
+        Bitmap DrawBrickDown(Graphics graph, Bitmap bitmap, int pos, int line, COMMAND_TYPE_COLOR ctype, bool hatch);        
         Bitmap DrawField(Graphics graph, Bitmap bitmap, PictureBox targetBox);
         Bitmap DrawMPLine(Graphics graph, Bitmap bitmap, PictureBox targetBox, int countMP);
         void Hatching(Graphics graph, Bitmap bitmap, PointF[] points, HatchStyle hatchStyle, Color foreColor);

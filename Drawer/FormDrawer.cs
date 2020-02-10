@@ -44,7 +44,7 @@ namespace Drawer
             DrawerInterfaceIsReady = true;
         }
 
-        public static void BrickUP(COMMAND_TYPE ctype, bool hatch = false)
+        public static void BrickUP(COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             int pos;
             lock (threadLock)
@@ -56,11 +56,11 @@ namespace Drawer
                     if (!casesline.ContainsKey(Thread.CurrentThread.Name)) casesline.Add(Thread.CurrentThread.Name, linepos += 1);
                 }
                 pos = casesqure[Thread.CurrentThread.Name] += squrepos;               
-                if (ctype == COMMAND_TYPE.NON_CACHE || ctype == COMMAND_TYPE.NON_CACHE_CTRL)
+                if (ctype == COMMAND_TYPE_COLOR.NON_CACHE || ctype == COMMAND_TYPE_COLOR.NON_CACHE_CTRL)
                 {
                     hatch = true;                   
                 }                
-                if (ctype != COMMAND_TYPE.CACHE && ctype != COMMAND_TYPE.CACHE_CTRL)
+                if (ctype != COMMAND_TYPE_COLOR.CACHE && ctype != COMMAND_TYPE_COLOR.CACHE_CTRL)
                 {
                     if (monoline == 0) monoline = pos;
                     Graph.Image = draw.DrawBrickUp(graph, mainBitMap, monoline++, casesline[Thread.CurrentThread.Name], ctype, hatch);
@@ -73,7 +73,7 @@ namespace Drawer
             }                      
         }
 
-        public static void BrickDOWN(COMMAND_TYPE ctype, bool hatch = false)
+        public static void BrickDOWN(COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             int pos;
             lock (threadLock)
@@ -85,7 +85,7 @@ namespace Drawer
                     if (!casesline.ContainsKey(Thread.CurrentThread.Name)) casesline.Add(Thread.CurrentThread.Name, linepos += 1);
                 }
                 pos = casesqure[Thread.CurrentThread.Name] += squrepos;              
-                if (ctype != COMMAND_TYPE.CACHE) 
+                if (ctype != COMMAND_TYPE_COLOR.CACHE) 
                 {
                     hatch = true;
                     if (monoline == 0) monoline = pos;
@@ -100,7 +100,7 @@ namespace Drawer
             }             
         }
 
-        public static void BrickUP(int pos, COMMAND_TYPE ctype, bool hatch = false)
+        public static void BrickUP(int pos, COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             lock (threadLock)
             {
@@ -110,7 +110,7 @@ namespace Drawer
                     casesqure.Add(Thread.CurrentThread.Name, 0);
                     if (!casesline.ContainsKey(Thread.CurrentThread.Name)) casesline.Add(Thread.CurrentThread.Name, linepos += 1);
                 }
-                if (ctype != COMMAND_TYPE.CACHE)
+                if (ctype != COMMAND_TYPE_COLOR.CACHE)
                 {
                     hatch = true;
                     Graph.Image = draw.DrawBrickUp(graph, mainBitMap, casesqure[Thread.CurrentThread.Name] + (pos + shift), casesline[Thread.CurrentThread.Name], ctype, hatch);
@@ -120,7 +120,7 @@ namespace Drawer
             }
         }
 
-        public static void BrickDOWN(int pos, COMMAND_TYPE ctype, bool hatch = false)
+        public static void BrickDOWN(int pos, COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             lock (threadLock)
             {
@@ -130,7 +130,7 @@ namespace Drawer
                     casesqure.Add(Thread.CurrentThread.Name, 0);
                     if (!casesline.ContainsKey(Thread.CurrentThread.Name)) casesline.Add(Thread.CurrentThread.Name, linepos += 1);
                 }
-                if (ctype != COMMAND_TYPE.CACHE)
+                if (ctype != COMMAND_TYPE_COLOR.CACHE)
                 {
                     hatch = true;
                     Graph.Image = draw.DrawBrickDown(graph, mainBitMap, casesqure[Thread.CurrentThread.Name] + (pos + shift), casesline[Thread.CurrentThread.Name], ctype, hatch);
@@ -141,7 +141,7 @@ namespace Drawer
                 
         }
 
-        public static void BricksUP(int count, COMMAND_TYPE ctype, bool enableSkipping = false, bool hatch = false)
+        public static void BricksUP(int count, COMMAND_TYPE_COLOR ctype, bool enableSkipping = false, bool hatch = false)
         {
             lock (threadLock)
             {
@@ -156,7 +156,7 @@ namespace Drawer
             }
         }
 
-        public static void BricksDOWN(int count, COMMAND_TYPE ctype, bool hatch = false)
+        public static void BricksDOWN(int count, COMMAND_TYPE_COLOR ctype, bool hatch = false)
         {
             lock (threadLock)
             {
@@ -185,19 +185,19 @@ namespace Drawer
                 monoline = value;
             }
         }
-        public void SetMonoLinePos(COMMAND_TYPE ctype)
+        public void SetMonoLinePos(COMMAND_TYPE_COLOR ctype)
         {
             switch (ctype)
             {
-                case COMMAND_TYPE.CACHE:
+                case COMMAND_TYPE_COLOR.CACHE:
                     break;
-                case COMMAND_TYPE.CACHE_CTRL:
+                case COMMAND_TYPE_COLOR.CACHE_CTRL:
                     monoline++;
                     break;
-                case COMMAND_TYPE.NON_CACHE:
+                case COMMAND_TYPE_COLOR.NON_CACHE:
                     monoline++;
                     break;
-                case COMMAND_TYPE.NON_CACHE_CTRL:
+                case COMMAND_TYPE_COLOR.NON_CACHE_CTRL:
                     monoline++;
                     break;
             }

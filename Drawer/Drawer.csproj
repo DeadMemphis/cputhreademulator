@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="COMMAND_TYPE.cs" />
-    <Compile Include="Drawer.cs" />
+    <Compile Include="Enums\COMMAND_TYPE_COLOR.cs" />
+    <Compile Include="Misc\Drawer.cs" />
     <Compile Include="FormDrawer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,8 +56,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Squre.cs" />
-    <Compile Include="SQURE_TYPE.cs" />
+    <Compile Include="Misc\Squre.cs" />
+    <Compile Include="Enums\SQURE_TYPE.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormDrawer.resx">

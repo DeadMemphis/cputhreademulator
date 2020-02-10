@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Drawer; 
 
 
@@ -39,10 +38,10 @@ namespace Core
                     {
                         SystemBus.TakeBus();
                         Console.WriteLine(Name + " take SystemBus.");
-                        for (int i = 0; i < 6; i++)
-                        {
-                            FormDrawer.BrickUP(caching.TYPE);
-                        }
+                        //for (int i = 0; i < 6; i++)
+                        //{
+                        //    FormDrawer.BrickUP(caching.TYPE);
+                        //}
                         SystemBus.FreeBus();
                         Console.WriteLine(Name + " free SystemBus.");
                         base.state = CONTROLLER_STATE.EXECUTED;
@@ -59,10 +58,10 @@ namespace Core
                     {
                         SystemBus.TakeBus();
                         Console.WriteLine(Name + " take SystemBus.");
-                        for (int i = 0; i < 6; i++)
-                        {
-                            FormDrawer.BrickUP(caching.TYPE);
-                        }
+                        //for (int i = 0; i < 6; i++)
+                        //{
+                        //    FormDrawer.BrickUP(caching.TYPE);
+                        //}
                         SystemBus.FreeBus();
                         Console.WriteLine(Name + " free SystemBus.");
                         base.state = CONTROLLER_STATE.EXECUTED;

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
+using Core;
+
 
 namespace Core.APILevel
 {
     public delegate void ExecuteTask(object sender, COMMAND Task);
     
-    public class Controller
+    public class Controller //wocher
     {
         static List<Thread> ThreadPool = new List<Thread>();
         static List<MPController> MPPool = new List<MPController>();
@@ -43,13 +44,13 @@ namespace Core.APILevel
             {
                 mp = sender as MPController;
                 Console.WriteLine(mp.Name + " on changed state: " + state.ToString());
-                if (state == CONTROLLER_STATE.READY) mp.SetTask(mp.TaskList.Dequeue());
-                if (mp.TaskList.Count == 0) mp.state = CONTROLLER_STATE.END;
+                if (state == CONTROLLER_STATE.READY) mp.SetTask(mp.CommandList.First());
+                if (mp.CommandList.Count == 0) mp.state = CONTROLLER_STATE.END;
             }
             else Console.WriteLine("wrong params");
         }
 
-        static void OnRequest(object sender, int TASK)
+        static void OnRequest(object sender, COMMAND TASK)
         {
             if (sender is MPController)
             {
@@ -69,6 +70,11 @@ namespace Core.APILevel
         public void OnExecutedTaks(COMMAND task)
         {
             ExecuteTaksEvent?.Invoke(this, task);
+        }
+
+        public void DoWork()
+        { 
+        
         }
     }
 }

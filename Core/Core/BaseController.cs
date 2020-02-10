@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Core
@@ -43,14 +41,14 @@ namespace Core
 
         public virtual void FeatTask()
         {
-            //tasks.Add(new TASK(1, COMMAND_TYPE.CACHE, false, false, false));
-            //tasks.Add(new TASK(1, COMMAND_TYPE.NON_CACHE, false, false, false));
-            //tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false, false));
+            CommandList.Add(new COMMAND(1, COMMAND_TYPE.CACHE));
+            CommandList.Add(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
+            //CommandList.Add(new COMMAND(2, COMMAND_TYPE.CACHE_CTRL));
             ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
             ////currient = new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false);
             ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
             ////tasks.Add(new TASK(2, COMMAND_TYPE.NON_CACHE_CTRL, false, false));
-            //Console.WriteLine("Set tasks for " + Name);
+            Console.WriteLine("Set tasks for " + Name);
         }
 
         public bool PickTask()
@@ -112,7 +110,7 @@ namespace Core
         #region BaseStructure
         public virtual void Remove()
         {
-            //TaskList.Remove(currient);
+            CommandList.Remove(currient);
         }
         public virtual void Decode()
         {
@@ -132,58 +130,57 @@ namespace Core
             //    Console.WriteLine("Call BrickDOWN(), i = " + i);
             //    FormDrawer.BrickDOWN(currient.TYPE);
             //}
-            //currient.COMPLITE = true;
+            currient.COMPLITE = true;
         }
         public virtual void Simulator()
         {
-            //for (; ;)
-            //{
-            //    OnState();
-            //    if (_state == CONTROLLER_STATE.END)
-            //    {
-            //        Console.WriteLine(Name + " END");
-            //        return;
-            //    }
-
-            //}
+            for (; ;)
+            {
+                OnState();
+                if (state == CONTROLLER_STATE.END)
+                {
+                    Console.WriteLine(Name + " END");
+                    return;
+                }
+            }
         }
         public virtual void OnState()
         {
-            //switch (_state)
-            //{
-            //    case CONTROLLER_STATE.READY:                   
-            //        break;
-            //    case CONTROLLER_STATE.STARTING:
-            //        Console.WriteLine("<" + Name + "> STARTING");
-            //        //if (PickTask())
-            //        //{
-            //        //    Console.WriteLine("Pick on " + Name + "task: " + currient.TYPE.ToString());
-            //        //    _state = CONTROLLER_STATE.BUSY;
-            //        //}
-            //        //else if (!currient.COMPLITE && (currient.TYPE == COMMAND_TYPE.NON_CACHE || currient.TYPE == COMMAND_TYPE.NON_CACHE_CTRL))
-            //        //    _state = CONTROLLER_STATE.BUSY;
-            //        //else Console.WriteLine("Currient task on " + Name + ": " + currient.TYPE.ToString());
-            //        break;
-            //    case CONTROLLER_STATE.WAITING:
-            //        Wait();
-            //        _state = CONTROLLER_STATE.READY;
-            //        break;
-            //    case CONTROLLER_STATE.BUSY:
-            //        Execute();
-            //        if (tasks.Count == 0)
-            //        {
-            //            Console.WriteLine(Name + " go break.");
-            //            _state = CONTROLLER_STATE.END;
-            //        }
-            //        break;
-            //    case CONTROLLER_STATE.INTERRUPT:
-            //        _state = CONTROLLER_STATE.WAITING;
-            //        break;
-            //    case CONTROLLER_STATE.END:
-            //        Console.WriteLine(Name + " state.END.");
-            //        break;
-            //}
-            //OnStateChange();
+            switch (state)
+            {
+                case CONTROLLER_STATE.READY:
+                    break;
+                case CONTROLLER_STATE.STARTING:
+                    Console.WriteLine("<" + Name + "> STARTING");
+                    //if (PickTask())
+                    //{
+                    //    Console.WriteLine("Pick on " + Name + "task: " + currient.TYPE.ToString());
+                    //    _state = CONTROLLER_STATE.BUSY;
+                    //}
+                    //else if (!currient.COMPLITE && (currient.TYPE == COMMAND_TYPE.NON_CACHE || currient.TYPE == COMMAND_TYPE.NON_CACHE_CTRL))
+                    //    _state = CONTROLLER_STATE.BUSY;
+                    //else Console.WriteLine("Currient task on " + Name + ": " + currient.TYPE.ToString());
+                    break;
+                case CONTROLLER_STATE.WAITING:
+                    Wait();
+                    state = CONTROLLER_STATE.READY;
+                    break;
+                case CONTROLLER_STATE.BUSY:
+                    Execute();
+                    if (CommandList.Count == 0)
+                    {
+                        Console.WriteLine(Name + " go break.");
+                        state = CONTROLLER_STATE.END;
+                    }
+                    break;
+                case CONTROLLER_STATE.INTERRUPT:
+                    state = CONTROLLER_STATE.WAITING;
+                    break;
+                case CONTROLLER_STATE.END:
+                    Console.WriteLine(Name + " state.END.");
+                    break;
+            }
+            OnStatusChange();
         }
         #endregion
 
