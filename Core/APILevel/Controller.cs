@@ -13,7 +13,8 @@ namespace Core.APILevel
     {
         static List<Thread> ThreadPool = new List<Thread>();
         static List<MPController> MPPool = new List<MPController>();
-        
+        static Queue<COMMAND> CommandList = new Queue<COMMAND>();
+
         public event ExecuteTask ExecuteTaksEvent;
         
         public void Init(short count)
@@ -21,7 +22,7 @@ namespace Core.APILevel
             for (int i = 0; i < count; i++)
             {
                 MPController mp = new MPController(CONTROLLER_MODE.FIFO);
-                Thread thr = new Thread(mp.OnState)
+                Thread thr = new Thread(mp.Simulator)
                 {
                     IsBackground = true,
                     Name = "MP" + i.ToString()
@@ -33,10 +34,11 @@ namespace Core.APILevel
                 MPPool.Add(mp);
                 ThreadPool.Add(thr);
                 thr.Start();
-                mp.FeatTask();
             }
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
+            CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.CACHE));
+            CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
         }
+
         static void OnStatusChanged(object sender, CONTROLLER_STATE state)
         {
             MPController mp;
@@ -44,8 +46,11 @@ namespace Core.APILevel
             {
                 mp = sender as MPController;
                 Console.WriteLine(mp.Name + " on changed state: " + state.ToString());
-                if (state == CONTROLLER_STATE.READY) mp.SetTask(mp.CommandList.First());
-                if (mp.CommandList.Count == 0) mp.state = CONTROLLER_STATE.END;
+                if (CommandList.Count == 0) mp.state = CONTROLLER_STATE.END;
+                else if (state == CONTROLLER_STATE.READY)
+                {
+                    mp.SetTask(CommandList.Dequeue());
+                }               
             }
             else Console.WriteLine("wrong params");
         }
@@ -63,18 +68,14 @@ namespace Core.APILevel
         {
             if (sender is MPController)
             {
-                Console.WriteLine("Executed task: " + task.ToString() + " on " + (sender as MPController).Name);
+                Console.WriteLine("Executed task: " + task.TYPE.ToString() + " on " + (sender as MPController).Name);
             }
             else Console.WriteLine("wrong params");
         }
+        
         public void OnExecutedTaks(COMMAND task)
         {
             ExecuteTaksEvent?.Invoke(this, task);
-        }
-
-        public void DoWork()
-        { 
-        
         }
     }
 }

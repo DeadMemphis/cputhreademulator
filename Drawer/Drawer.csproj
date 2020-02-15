@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\COMMAND_TYPE_COLOR.cs" />
+    <Compile Include="Interfaces\IDraw.cs" />
     <Compile Include="Misc\Drawer.cs" />
     <Compile Include="FormDrawer.cs">
       <SubType>Form</SubType>

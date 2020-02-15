@@ -30,8 +30,9 @@ namespace Core // todo
                 case COMMAND_TYPE.CACHE:
                     base.Decode();
                     base.Execute();
-                    base.Remove();
-                    base.state = CONTROLLER_STATE.READY;
+                    //base.Remove();
+                    //base.state = CONTROLLER_STATE.READY;
+                    base.OnExecuted();
                     break;
                 case COMMAND_TYPE.CACHE_CTRL:
                     base.Decode();
@@ -42,7 +43,7 @@ namespace Core // todo
                         base.Execute();
                         SystemBus.FreeBus();
                         Console.WriteLine(Name + " free SystemBus.");
-                        base.Remove();
+                        //base.Remove();
                         base.state = CONTROLLER_STATE.READY;
                     }
                     else
@@ -68,7 +69,7 @@ namespace Core // todo
                         base.Execute();
                         base.currient.COMPLITE = true;
                         own_cache.state = CONTROLLER_STATE.END;
-                        base.Remove();
+                        //base.Remove();
                         base.state = CONTROLLER_STATE.READY;
                     }
                     break;
@@ -81,7 +82,7 @@ namespace Core // todo
                         Console.WriteLine("Get execution in " + Name);
                         base.Decode();
                         base.currient.COMPLITE = true;
-                        base.Remove();
+                        //base.Remove();
                         base.state = CONTROLLER_STATE.READY;
                     }
                    
@@ -93,7 +94,7 @@ namespace Core // todo
         {
             Console.WriteLine("START POINT");
             base.state = CONTROLLER_STATE.STARTING;
-            base.FeatTask();
+            //base.FeatTask();
             base.state = CONTROLLER_STATE.READY;
             base.Simulator();
 

@@ -24,7 +24,7 @@ namespace Core
         public event Execute ExecuteEvent;
         #endregion
 
-        public List<COMMAND> CommandList = new List<COMMAND>();
+        //public List<COMMAND> CommandList = new List<COMMAND>();
         public COMMAND currient;
 
         public BaseController(CONTROLLER_TYPE Type, CONTROLLER_MODE Mode)
@@ -37,19 +37,20 @@ namespace Core
         {
             currient = task;
             state = CONTROLLER_STATE.BUSY;
+            Console.WriteLine("Set task in currient for " + Name);
         }
 
-        public virtual void FeatTask()
-        {
-            CommandList.Add(new COMMAND(1, COMMAND_TYPE.CACHE));
-            CommandList.Add(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
+        //public virtual void FeatTask()
+        //{
+            //CommandList.Add(new COMMAND(1, COMMAND_TYPE.CACHE));
+            //CommandList.Add(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
             //CommandList.Add(new COMMAND(2, COMMAND_TYPE.CACHE_CTRL));
             ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
             ////currient = new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false);
             ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
             ////tasks.Add(new TASK(2, COMMAND_TYPE.NON_CACHE_CTRL, false, false));
-            Console.WriteLine("Set tasks for " + Name);
-        }
+            //Console.WriteLine("Set tasks for " + Name);
+        //}
 
         public bool PickTask()
         {
@@ -108,10 +109,11 @@ namespace Core
         }
 
         #region BaseStructure
-        public virtual void Remove()
-        {
-            CommandList.Remove(currient);
-        }
+        //public virtual void Remove()
+        //{
+        //    CommandList.Remove(currient);
+        //}
+
         public virtual void Decode()
         {
             //Console.WriteLine("Decoding");
@@ -122,6 +124,7 @@ namespace Core
             //}
             currient.DECODED = true; 
         }
+
         public virtual void Execute()
         {
             //Console.WriteLine("Call base Execute()");
@@ -132,6 +135,7 @@ namespace Core
             //}
             currient.COMPLITE = true;
         }
+
         public virtual void Simulator()
         {
             for (; ;)
@@ -144,6 +148,7 @@ namespace Core
                 }
             }
         }
+
         public virtual void OnState()
         {
             switch (state)
@@ -167,11 +172,12 @@ namespace Core
                     break;
                 case CONTROLLER_STATE.BUSY:
                     Execute();
-                    if (CommandList.Count == 0)
-                    {
-                        Console.WriteLine(Name + " go break.");
-                        state = CONTROLLER_STATE.END;
-                    }
+                    //Remove();
+                    //if (CommandList.Count == 0)
+                    //{
+                    //    Console.WriteLine(Name + " go break.");
+                    //    state = CONTROLLER_STATE.END;
+                    //}
                     break;
                 case CONTROLLER_STATE.INTERRUPT:
                     state = CONTROLLER_STATE.WAITING;
