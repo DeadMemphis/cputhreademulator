@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public enum CONTROLLER_TYPE : byte
+    interface ISimulator
     {
-        MPController = 0,
-        CacheController = 2
+
     }
 }

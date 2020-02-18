@@ -44,15 +44,16 @@
   <ItemGroup>
     <Compile Include="APILevel\Controller.cs" />
     <Compile Include="Command\COMMAND_TYPE.cs" />
-    <Compile Include="Core\BaseController.cs" />
-    <Compile Include="Core\CONTROLLER_MODE.cs" />
-    <Compile Include="Core\CONTROLLER_STATE.cs" />
-    <Compile Include="Core\CONTROLLER_TYPE.cs" />
+    <Compile Include="Base\BaseController.cs" />
+    <Compile Include="Enums\CONTROLLER_MODE.cs" />
+    <Compile Include="Enums\CONTROLLER_STATE.cs" />
+    <Compile Include="Enums\CONTROLLER_TYPE.cs" />
     <Compile Include="Core\SystemBus.cs" />
     <Compile Include="Command\COMMAND.cs" />
     <Compile Include="Core\CacheController.cs" />
     <Compile Include="Core\MPController.cs" />
     <Compile Include="Ext\Extensions.cs" />
+    <Compile Include="Intrefaces\ISimulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,8 +62,6 @@
       <Name>Drawer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Intrefaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
