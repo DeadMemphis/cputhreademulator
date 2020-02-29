@@ -16,7 +16,9 @@ namespace Core // todo
             cache_thread = new Thread(own_cache.Simulator);
             own_cache.Name = own_cache.Name = base.Name + "[CC]";
             own_cache.CachingEvent += OnExecuted;
-            cache_thread.Start();
+            
+            //cache_thread.Start(); STOP BITCH
+            
             //CCThread = new Thread(own_cache.OnState) { IsBackground = true };
             //CCThread.Name = own_cache.Name = base.Name + "[CC]";
             //CCThread.Start();

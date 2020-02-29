@@ -16,7 +16,9 @@ namespace Core.APILevel
         static Queue<COMMAND> CommandList = new Queue<COMMAND>();
 
         public event ExecuteTask ExecuteTaksEvent;
-        
+
+        private static bool ModulesIsReady = false;
+
         public void Init(short count)
         {
             for (int i = 0; i < count; i++)
@@ -37,12 +39,13 @@ namespace Core.APILevel
             }
             CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.CACHE));
             CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
+            ModulesIsReady = true;
         }
 
         static void OnStatusChanged(object sender, CONTROLLER_STATE state)
         {
             MPController mp;
-            if (sender is MPController)
+            if (sender is MPController && ModulesIsReady)
             {
                 mp = sender as MPController;
                 Console.WriteLine(mp.Name + " on changed state: " + state.ToString());
@@ -57,7 +60,7 @@ namespace Core.APILevel
 
         static void OnRequest(object sender, COMMAND TASK)
         {
-            if (sender is MPController)
+            if (sender is MPController && ModulesIsReady)
             {
                 Console.WriteLine("Get Request from " + (sender as MPController).Name);
             }

@@ -8,6 +8,10 @@ namespace Core
 {
     interface ISimulator
     {
-
+        void SetTask(COMMAND task);
+        void Decode();
+        void Execute();
+        void Simulator();
+        void OnState();
     }
 }

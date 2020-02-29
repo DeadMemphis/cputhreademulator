@@ -8,6 +8,8 @@
         INTERRUPT = 8,
         END = 16,
         EXECUTED = 32, 
-        READY = 64
+        READY = 64,
+        IDLE = 128
+
     }
 }

@@ -10,7 +10,7 @@ namespace Core
     public delegate void Execute(object sender, COMMAND cmnd);
     #endregion
 
-    public abstract class BaseController
+    public abstract class BaseController : ISimulator
     {
         public string Name;
         public CONTROLLER_STATE state;
@@ -23,7 +23,6 @@ namespace Core
         public event Execute ExecuteEvent;
         #endregion
 
-        //public List<COMMAND> CommandList = new List<COMMAND>();
         public COMMAND currient;
 
         public BaseController(CONTROLLER_TYPE Type, CONTROLLER_MODE Mode)
@@ -39,16 +38,18 @@ namespace Core
             Console.WriteLine("Set task in currient for " + Name);
         }
 
+        #region Extra
+
         //public virtual void FeatTask()
         //{
-            //CommandList.Add(new COMMAND(1, COMMAND_TYPE.CACHE));
-            //CommandList.Add(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
-            //CommandList.Add(new COMMAND(2, COMMAND_TYPE.CACHE_CTRL));
-            ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
-            ////currient = new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false);
-            ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
-            ////tasks.Add(new TASK(2, COMMAND_TYPE.NON_CACHE_CTRL, false, false));
-            //Console.WriteLine("Set tasks for " + Name);
+        //CommandList.Add(new COMMAND(1, COMMAND_TYPE.CACHE));
+        //CommandList.Add(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
+        //CommandList.Add(new COMMAND(2, COMMAND_TYPE.CACHE_CTRL));
+        ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
+        ////currient = new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false);
+        ////tasks.Add(new TASK(2, COMMAND_TYPE.CACHE_CTRL, false, false));
+        ////tasks.Add(new TASK(2, COMMAND_TYPE.NON_CACHE_CTRL, false, false));
+        //Console.WriteLine("Set tasks for " + Name);
         //}
 
         public bool PickTask()
@@ -107,11 +108,14 @@ namespace Core
             return true;
         }
 
+        #endregion
+
         #region BaseStructure
-        //public virtual void Remove()
-        //{
-        //    CommandList.Remove(currient);
-        //}
+        public virtual void Remove()
+        {
+            //CommandList.Remove(currient);
+        }
+
 
         public virtual void Decode()
         {
