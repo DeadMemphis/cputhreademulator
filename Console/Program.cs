@@ -12,7 +12,7 @@ namespace Threading_Test
         {
             Console.WriteLine("Core v2.0 .");
             Core.APILevel.Controller wocher = new Core.APILevel.Controller();
-            wocher.Init(2);
+            wocher.Init(1);
 
             while (true) { }
             

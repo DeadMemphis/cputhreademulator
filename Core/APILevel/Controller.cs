@@ -23,13 +23,16 @@ namespace Core.APILevel
         {
             for (int i = 0; i < count; i++)
             {
-                MPController mp = new MPController(CONTROLLER_MODE.FIFO);
+                MPController mp = new MPController(CONTROLLER_MODE.FIFO)
+                {
+                    Name = "MP" + i.ToString(),
+                };
+
                 Thread thr = new Thread(mp.Simulator)
                 {
                     IsBackground = true,
-                    Name = "MP" + i.ToString()
-                };
-                mp.Name = thr.Name;
+                    Name = mp.Name
+                };                
                 mp.RequestEvent += OnRequest;
                 mp.ChangeEvent += OnStatusChanged;
                 mp.ExecuteEvent += OnExecuted;
@@ -37,7 +40,8 @@ namespace Core.APILevel
                 ThreadPool.Add(thr);
                 thr.Start();
             }
-            CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.CACHE));
+            //CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.CACHE));
+            //CommandList.Enqueue(new COMMAND(2, COMMAND_TYPE.CACHE));
             CommandList.Enqueue(new COMMAND(1, COMMAND_TYPE.NON_CACHE));
             ModulesIsReady = true;
         }
@@ -48,9 +52,12 @@ namespace Core.APILevel
             if (sender is MPController && ModulesIsReady)
             {
                 mp = sender as MPController;
-                Console.WriteLine(mp.Name + " on changed state: " + state.ToString());
-                if (CommandList.Count == 0) mp.state = CONTROLLER_STATE.END;
-                else if (state == CONTROLLER_STATE.READY)
+                CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, mp.Name + " on changed state: " + state);
+                //if (CommandList.Count == 0)
+                //{
+                //    mp.state = CONTROLLER_STATE.END;
+                //}
+                if (state == CONTROLLER_STATE.READY && CommandList.Count != 0)
                 {
                     mp.SetTask(CommandList.Dequeue());
                 }               

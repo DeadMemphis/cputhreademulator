@@ -5,6 +5,7 @@ namespace Core
 {
     public static class CoreExtensions
     {
+        static object locker = new object();
         public static string ToString(this CONTROLLER_STATE state)
         {
             switch (state)
@@ -59,5 +60,18 @@ namespace Core
             Console.WriteLine("Thread " + thrd.Name + " interrupted.");
         }
 
+        public static void ConsoleLog(this string sender, string message)
+        {
+            lock(locker)
+            {
+                string time = DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second;
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(time);
+                Console.ResetColor();
+                string formatter = " [ " + sender + " ] : " + message + "\n";
+                Console.Write(formatter);
+            }
+        }          
     }
 }

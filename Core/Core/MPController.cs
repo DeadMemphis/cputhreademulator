@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Collections.Generic;
 using Drawer;
 
 namespace Core // todo
@@ -9,24 +10,31 @@ namespace Core // todo
     {
         public CacheController own_cache;
         private Thread cache_thread;
-
+        public Queue<COMMAND> stack;
+             
         public MPController(CONTROLLER_MODE mode) : base(CONTROLLER_TYPE.MPController, mode )
         {
-            own_cache = new CacheController(mode);
-            cache_thread = new Thread(own_cache.Simulator);
-            own_cache.Name = own_cache.Name = base.Name + "[CC]";
-            own_cache.CachingEvent += OnExecuted;
-            
-            //cache_thread.Start(); STOP BITCH
+                       
+            //cache_thread.Start(); //STOP BITCH
             
             //CCThread = new Thread(own_cache.OnState) { IsBackground = true };
             //CCThread.Name = own_cache.Name = base.Name + "[CC]";
             //CCThread.Start();
         }
 
+        private void UpOwnCache()
+        {
+            own_cache = new CacheController(mode);
+            cache_thread = new Thread(own_cache.Simulator);
+            cache_thread.Name = own_cache.Name = base.Name + "[CC]";
+            own_cache.CachingEvent += OnExecuted;
+            cache_thread.Start();
+        }
+
         public override void Execute()
         {
-            Console.WriteLine("Call override Execute() in MPController.");
+            //Console.WriteLine("Call override Execute() in MPController.");
+            CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "Call override Execute().");
             switch (base.currient.TYPE)
             {
                 case COMMAND_TYPE.CACHE:
@@ -41,10 +49,10 @@ namespace Core // todo
                     if (!SystemBus.IsBusy())
                     {
                         SystemBus.TakeBus();
-                        Console.WriteLine(Name + " take SystemBus.");
+                        CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "take SystemBus.");
                         base.Execute();
                         SystemBus.FreeBus();
-                        Console.WriteLine(Name + " free SystemBus.");
+                        CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "free SystemBus.");
                         //base.Remove();
                         base.state = CONTROLLER_STATE.READY;
                     }
@@ -66,7 +74,7 @@ namespace Core // todo
                     //_own_cache.Simulator();
                     if (own_cache.state == CONTROLLER_STATE.EXECUTED)
                     {
-                        Console.WriteLine("Get execution in " + Name);
+                        CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "Get execution form own CC.");
                         base.Decode();
                         base.Execute();
                         base.currient.COMPLITE = true;
@@ -94,18 +102,21 @@ namespace Core // todo
 
         public override void Simulator()
         {
-            Console.WriteLine("START POINT");
+            CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "START POINT");
             base.state = CONTROLLER_STATE.STARTING;
+            UpOwnCache();
             //base.FeatTask();
             base.state = CONTROLLER_STATE.READY;
             base.Simulator();
-
         }
 
         public void OnExecuted(object sender, COMMAND cmnd)
         {
+            CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "Get execution form own CC [sector: Event].");
             base.Decode();
+            base.Execute();
             base.currient.COMPLITE = true;
+            base.state = CONTROLLER_STATE.READY;
         }
     }
 }

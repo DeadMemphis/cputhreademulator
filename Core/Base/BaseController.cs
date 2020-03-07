@@ -25,6 +25,8 @@ namespace Core
 
         public COMMAND currient;
 
+        private int DeadCount = 10;
+
         public BaseController(CONTROLLER_TYPE Type, CONTROLLER_MODE Mode)
         {
             type = Type;
@@ -35,7 +37,8 @@ namespace Core
         {
             currient = task;
             state = CONTROLLER_STATE.BUSY;
-            Console.WriteLine("Set task in currient for " + Name);
+            //Console.WriteLine("Set task in currient for " + Name);
+            CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "Set task in currient.");
         }
 
         #region Extra
@@ -116,7 +119,6 @@ namespace Core
             //CommandList.Remove(currient);
         }
 
-
         public virtual void Decode()
         {
             //Console.WriteLine("Decoding");
@@ -136,7 +138,9 @@ namespace Core
             //    Console.WriteLine("Call BrickDOWN(), i = " + i);
             //    FormDrawer.BrickDOWN(currient.TYPE);
             //}
-            currient.COMPLITE = true;
+            //if (currient.COMPLITE) state = CONTROLLER_STATE.IDLE;
+            //else
+                currient.COMPLITE = true;
         }
 
         public virtual void Simulator()
@@ -146,7 +150,8 @@ namespace Core
                 OnState();
                 if (state == CONTROLLER_STATE.END)
                 {
-                    Console.WriteLine(Name + " END");
+                    CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "END");
+                    //Console.WriteLine(Name + " END");
                     return;
                 }
             }
@@ -157,6 +162,12 @@ namespace Core
             switch (state)
             {
                 case CONTROLLER_STATE.READY:
+                    //if (DeadCount == 5) state = CONTROLLER_STATE.IDLE;
+                    //else DeadCount--;
+                    break;
+                case CONTROLLER_STATE.IDLE:
+                    if (DeadCount == 0) state = CONTROLLER_STATE.INTERRUPT;
+                    else DeadCount--;                  
                     break;
                 case CONTROLLER_STATE.STARTING:
                     Console.WriteLine("<" + Name + "> STARTING");
@@ -174,7 +185,7 @@ namespace Core
                     state = CONTROLLER_STATE.READY;
                     break;
                 case CONTROLLER_STATE.BUSY:
-                    Execute();
+                    Execute();                  
                     //Remove();
                     //if (CommandList.Count == 0)
                     //{
@@ -186,7 +197,7 @@ namespace Core
                     state = CONTROLLER_STATE.WAITING;
                     break;
                 case CONTROLLER_STATE.END:
-                    Console.WriteLine(Name + " state.END.");
+                    CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "state.END.");
                     break;
             }
             OnStatusChange();
@@ -201,7 +212,7 @@ namespace Core
             }
             catch (ThreadInterruptedException)
             {
-                Console.WriteLine(Name + " woke the fuck up");
+                CoreExtensions.ConsoleLog(Thread.CurrentThread.Name, "woke the fuck up");
             }
         }
 
